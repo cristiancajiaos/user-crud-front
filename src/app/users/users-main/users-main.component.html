@@ -1,3 +1,27 @@
-<p>
-  users-main works!
-</p>
+<section class="users-main">
+  @if (usersResource.isLoading()) {
+    <p>Loading...</p>
+  }
+  @if (usersResource.hasValue()) {
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Name</th>
+            <th>Job</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of usersResource.value(); track user.id; let i = $index) {
+            <tr>
+              <th>{{i+1}}</th>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

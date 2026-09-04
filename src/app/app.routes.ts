@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadChildren: () => import('./users/users.routes')
   },
   {
+    path: 'seed',
+    loadChildren: () => import('./seed/seed.routes')
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

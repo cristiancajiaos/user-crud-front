@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { map, Observable, of, pipe, tap } from 'rxjs';
 import { User } from '../shared/interfaces/user-interface';
 
+interface SeedResponse {
+  status: number;
+  message: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -25,5 +29,10 @@ export class UsersService {
     }).pipe(tap(users => {
       this.usersCache.set(`users-${limit}-${offset}`, users)
     }))
+  }
+
+  executeSeed(): Observable<SeedResponse> {
+    this.usersCache.clear();
+    return this.http.get<SeedResponse>(`http://localhost:3000/api/seed`);
   }
 }

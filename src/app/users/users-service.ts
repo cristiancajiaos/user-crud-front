@@ -13,14 +13,14 @@ export class UsersService {
 
   constructor() {}
 
-  getUsers(limit: number, offset: number): Observable<User[] | undefined> {
+  getUsers(limit: number = 10, offset: number = 0): Observable<User[] | undefined> {
     if (this.usersCache.has(`users-${limit}-${offset}`)) {
       return of(this.usersCache.get(`users-${limit}-${offset}`));
     }
     return this.http.get<User[]>(`http://localhost:3000/api/users`, {
       params: {
-        limit: 10,
-        offset: 0
+        limit: limit,
+        offset: offset
       }
     }).pipe(tap(users => {
       this.usersCache.set(`users-${limit}-${offset}`, users)
